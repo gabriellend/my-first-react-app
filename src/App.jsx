@@ -1,10 +1,9 @@
 import "./App.css";
+import { CV } from "@/components/CV.jsx";
 
 function App() {
 	return (
-		<>
-			<h1>Hello World!</h1>
-		</>
+		<CV />
 	);
 }
 
