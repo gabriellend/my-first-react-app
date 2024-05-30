@@ -1,10 +1,12 @@
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import '@/styles/Section.css';
 import EditableInput from '@/components/EditableInput';
+import Button from '@/components/Button';
 
-export default function Section({
-  title,
-  initialInputNumber,
-}) {
+export default function Section({ title, initialInputNumber }) {
+  const [listItems, setListItems] = useState([{ id: uuid() }]);
+  console.log(listItems);
   const sectionStyle = `section ${
     title === 'Header'
       ? 'header-section'
@@ -25,27 +27,48 @@ export default function Section({
         ? ['School and Location', 'Dates']
         : ['Role and Company', 'Dates'];
 
+  const addLine = () => {
+    setListItems(prevState => [...prevState, { id: uuid() }]);
+  };
+
+  const deleteLine = id => {
+    setListItems(prevState => prevState.filter(item => item.id !== id));
+  };
+
   return (
     <div className={sectionStyle}>
       {title === 'Header' ? (
-        <div className="name">
-          <h1><EditableInput placeholder="Name" /></h1>
-        </div>
+          <h1 className="name">
+            <EditableInput placeholder="Name" />
+          </h1>
       ) : (
         <h2 className="title">{title}</h2>
       )}
       <div className="info">
-        {inputsArray.map((_, index) =>       
-          <EditableInput placeholder={placeholders[index]} key={index} />
-        )}
+        {inputsArray.map((_, index) => (
+          <EditableInput placeholder={placeholders[index]} />
+        ))}
       </div>
       {title !== 'Header' && (
+        <div>
           <ul>
-            <li>
-              <EditableInput placeholder={'Describe your accomplistments'} /> 
-            </li>
+            {listItems.map(item => (
+              <li key={item.id}>
+                <div className="list-item">
+                  <EditableInput
+                    placeholder={'Describe your accomplistments'}
+                  />
+                  <Button
+                    action="delete"
+                    deleteLine={() => deleteLine(item.id)}
+                  />
+                </div>
+              </li>
+            ))}
           </ul>
-        )}
+          <Button action={'add'} addLine={addLine} />
+        </div>
+      )}
     </div>
   );
 }

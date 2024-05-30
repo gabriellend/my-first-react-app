@@ -1,0 +1,13 @@
+.button {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-button {
+    margin-left: 20px;
+}
