@@ -1,35 +1,31 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 
-export default function EditableInput() {
-    const [isInput, setIsInput] = useState(false);
-    const inputRef = useRef(null);
+export default function EditableInput({ placeholder }) {
+  const [isInput, setIsInput] = useState(false);
+  const [value, setValue] = useState('');
+  const inputRef = useRef(null);
 
-    const handleDoubleClick = () => {
-        setIsInput(true);
-    };
+  useEffect(() => {
+    if (isInput && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [isInput]);
 
-    const handleBlur = () => {
-        setIsInput(false);
-    };
-
-    useEffect(() => {
-        if (isInput && inputRef.current) {
-            inputRef.current.focus();
-            inputRef.current.select();
-        }
-    }, [isInput]);
-
-    return (
-        <>
-            {isInput ? (
-                <input
-                    ref={inputRef}
-                    onBlur={handleBlur}
-                    defaultValue="Double-click to edit"
-                />
-            ) : (
-                <p onDoubleClick={handleDoubleClick}>Double-click to edit</p>
-            )}
-        </>
-    );
+  return (
+    <>
+      {isInput ? (
+        <input
+          ref={inputRef}
+          type="text"
+          value={value ? value : placeholder}
+          onChange={e => setValue(e.target.value)}
+          onKeyDown={e => (e.key === 'Enter' ? setIsInput(false) : null)}       
+          onBlur={() => setIsInput(false)}
+        />
+      ) : (
+        <p onDoubleClick={() => setIsInput(true)}>{value ? value : placeholder}</p>
+      )}
+    </>
+  );
 }
