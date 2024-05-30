@@ -1,5 +1,5 @@
 import '@/styles/Section.css';
-import EditableInput from './EditableInput';
+import EditableInput from '@/components/EditableInput';
 
 export default function Section({
   title,
@@ -29,20 +29,23 @@ export default function Section({
     <div className={sectionStyle}>
       {title === 'Header' ? (
         <div className="name">
-          <EditableInput placeholder="Name" />
+          <h1><EditableInput placeholder="Name" /></h1>
         </div>
       ) : (
-        <h3 className="title">{title}</h3>
+        <h2 className="title">{title}</h2>
       )}
       <div className="info">
-        {inputsArray.map((_, index) =>
-          title !== 'Header' && index === 1 ? (
-            <EditableInput placeholder={placeholders[index]} key={index} />
-          ) : (
-            <EditableInput placeholder={placeholders[index]} key={index} />
-          ),
+        {inputsArray.map((_, index) =>       
+          <EditableInput placeholder={placeholders[index]} key={index} />
         )}
       </div>
+      {title !== 'Header' && (
+          <ul>
+            <li>
+              <EditableInput placeholder={'Describe your accomplistments'} /> 
+            </li>
+          </ul>
+        )}
     </div>
   );
 }
