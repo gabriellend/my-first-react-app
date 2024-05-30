@@ -29,7 +29,7 @@ export default function Section({
     <div className={sectionStyle}>
       {title === 'Header' ? (
         <div className="name">
-          <EditableInput placeholder="Name" />
+          <EditableInput placeholder="Test" />
         </div>
       ) : (
         <h3 className="title">{title}</h3>
